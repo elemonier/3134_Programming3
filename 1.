@@ -1,0 +1,20 @@
+1. 
+
+A <m HALTtm : Language A is mapping reducable to language B, if there exists a computable function 
+2. Show that A is Turing-recognizable iff A <m HALTtm
+	A language is Turing-recognizable if some turing machine recognizes it
+	ie a TM will enumerate all valid strings of a language.
+	a. A is Turing recognizable if A <m HALTtm.
+		If A is Turing recognizable, there exists a Turing machine M that recognizes A.
+		A = {w | M accepts w}
+		Examine: f(w) = <
+
+	b. if A <m HALTtm, A is Turing-recognizable.
+		If A<m HALTtm, then HALTtm is Turing-recognizable.
+		Because HALTtm is Turing-recognizable, A is Turing-recognizable by Theorem 5.28
+
+	mapping reduction: any instance of decision problem A can be turned into an instance of decision problem B.
+		Transform the given A problem instance to a corresponding B problem instance
+		Call a solver for B problem instances and return whatever answer (y/n) it gives
+
+3b. 5.10, 5.11

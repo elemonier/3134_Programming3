@@ -1,0 +1,8 @@
+Hash Table Representation of a Graph
+Graph has Edges & Vertices
+
+
+? loadup file: assume bin already contains something?
+? - warnings
+? - mapping to hash table directly; then what happens if i need to add to list
+?
