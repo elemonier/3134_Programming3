@@ -133,7 +133,8 @@ public class AdjustListGraph implements Serializable {
 	//
 	//
 	//}
-	public String findClosestCities(String currentCity, int n){
+	public String findClosestCities(String currentCity, double maxDistance){
+		System.out.println("in closest cities.");
 		int num = 0;
 		double currentDistance = 0;
 		int startIndex;
@@ -142,12 +143,12 @@ public class AdjustListGraph implements Serializable {
 			v.setVisited(false);
 			v.setMinDistance(Double.POSITIVE_INFINITY);
 		}
-		if(s == null){
-			System.out.println("Your current city wasn't set; so we generated a random start city for you: ");
+		if(currentCity == null){
+			System.out.print("Your current city wasn't set; so we generated a random start city for you.");
 			startIndex = rand.nextInt(data.length);
 		}
 		else{
-			startIndex = Lookup.get(s);
+			startIndex = Lookup.get(currentCity);
 		}
 		start = data[startIndex];
 		start.setMinDistance(0);
@@ -157,9 +158,9 @@ public class AdjustListGraph implements Serializable {
 		PriorityQueue<VNode> q = new PriorityQueue<VNode>(data.length, comparator);
 		q.add(start);
 		VNode cur = start;
-		while(num <= n)){
+		while(cur.getMinDistance() < maxDistance){
+			System.out.println(Double.toString(cur.getMinDistance()));
 			currentDistance = cur.getMinDistance();
-			cur = q.poll();
 			//for(int i = 0; i < cur.getList().getIntSize(); i++){
 			MyList l = cur.getList();
 			Iterator i = l.iterator();
@@ -184,11 +185,30 @@ public class AdjustListGraph implements Serializable {
 
 				}
 			}
-			num++;
+			cur = q.poll();
 		}
-		String finalPath = findPath(start, end);
-		System.out.println(finalPath);
-		System.out.println("The total distance traveled is: " + end.getMinDistance());
+		System.out.println(q);
+		//VNode [] anArray;
+		//anArray = q.toArray();
+		//for(VNode v : anArray)
+		//	System.out.println(v.toString());
+		//System.out.println("exited.");
+		VNode list_cur = q.poll();
+		System.out.println(list_cur);
+		Double dist = list_cur.getMinDistance();
+		System.out.println("First Dist: " + Double.toString(dist));
+		String list = "";
+		while(dist < maxDistance){
+			list = list_cur.getCityName() + ": " + Double.toString(list_cur.getMinDistance()) + "\n" + list;
+			list_cur = q.poll();
+			dist = list_cur.getMinDistance();
+			System.out.println("Dist: " + Double.toString(dist));
+		}
+		System.out.println(list);
+		return list;
+		//String finalPath = findPath(start, end);
+		//System.out.println(finalPath);
+		//System.out.println("The total distance traveled is: " + end.getMinDistance());
 	}
 	
 	public String listCities(String cityName, int n){
@@ -303,6 +323,31 @@ public class AdjustListGraph implements Serializable {
 		}
 		path = s.toString() + "\n" + path;
 		return path;
+	}
+
+	public void calculateGeoDistances(String currentCity, int num){
+		if(num > data.length){
+			System.out.println("There are not that many cities. Please choose another number.");
+		}
+		VNode start = data[Lookup.get(currentCity)];
+		MyList close = new MyList();
+		System.out.println("start: " + start);
+		for (VNode v : data){
+			if(v != start){
+				double d = start.calculateDistance(v);
+				close.insert(v.getCityName(), d);
+			}
+		}
+		close.sort();
+		Iterator i = close.iterator();
+		int check = 0;
+		String listCities = "";
+		while((check < num) && i.hasNext()){
+			listCities += (i.next() + "\n");
+			check++;
+		}
+		System.out.println(listCities);
+
 	}
 }
 

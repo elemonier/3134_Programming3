@@ -189,7 +189,7 @@ public class MyList implements Serializable, Iterable{
 			swapped = false;
 			ENode curr = head;
 			while (curr.next != null) {
-				if (curr.next.getWeight() > curr.getWeight()) {
+				if (curr.next.getWeight() < curr.getWeight()) {
 					swapped = true;
 					String temp = curr.getData();
 					double tempNum = curr.getWeight();

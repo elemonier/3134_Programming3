@@ -52,8 +52,10 @@ public class main{
 				caseG();
 				break;
 			case h:
+				caseH();
 				break;
 			case i:
+				caseI();
 				break;
 			case j:
 				caseJ();
@@ -71,6 +73,7 @@ public class main{
 }
 	public enum MenuOpt { a, b, c, d, e, f, g, h, i, j, k, l; }
 	public static void caseA(){
+		try{
 		Scanner scan = new Scanner(System.in);
 		System.out.print("Input 1 if you would like to clear the graph " +
 			"or 2 if you want to add information to the existing graph: ");
@@ -88,6 +91,8 @@ public class main{
 				break;
 			default: 
 				System.out.println("meow.");
+		}}catch(NumberFormatException ex){
+			System.out.println("Invalid input; please input either integer 1 or 2");
 		}
 	}
 
@@ -174,16 +179,24 @@ public class main{
 		System.out.println("Current City is not set yet.");
 	}
 	}
+	public static void caseH(){
+		if(currentCity == null){
+			System.out.println("Please set your current city.");
+			//break;
+		}
+		Scanner scan = new Scanner(System.in);
+		System.out.println("What number of cities would like to find " + 
+			"which are closest to your current city: ");
+		int num = Integer.parseInt(scan.nextLine());
+		graph.calculateGeoDistances(currentCity, num);
+
+	}
 
 	public static void caseI(){
-		//find the n closest cities from the current city, 
-		//if the current has not been set choose a random city as current, 
-		//Y is a number provided by the user. You will use the randomly generated d
-		//irected edges to measure cost and print all those which are less than Y away.
 		Scanner scan = new Scanner(System.in);
-		System.out.println("What is the maximum weight: ");
-		int n = scan.nextInt();
-		String closestCities = graph.findClosestCities(currentCity, n);
+		System.out.print("What is the maximum distance you would like to find cities to: ");
+		Double maxDist = Double.parseDouble(scan.nextLine());
+		String closestCities = graph.findClosestCities(currentCity, maxDist);
 	}
 
 	public static void caseJ(){
